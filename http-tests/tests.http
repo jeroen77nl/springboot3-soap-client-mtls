@@ -1,0 +1,13 @@
+### request meets all criteria
+
+POST http://localhost:9090/getLoanStatus
+Content-Type: application/json
+
+< approved.json
+
+### request does not meet all criteria
+
+POST http://localhost:9090/getLoanStatus
+Content-Type: application/json
+
+< denied.json
