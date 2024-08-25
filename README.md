@@ -1,23 +1,15 @@
 # springboot3-soap-client-mtls
 
-springboot3-soap-client runs on port 9090 and consumes the webservice of project **springboot3-soap-server**, that runs on port 8080.
+springboot3-soap-client-mtls runs on port 9090 and consumes the webservice of project **springboot3-soap-server-mtls**, that runs on port 8080.
 The app is a soap client as well as a rest server.
 
-This application is a modern variant of a demo by Java Techie (https://www.youtube.com/watch?v=ceSqN3CWd14). The important changes are:
+This application is based on the project **springboot3-soap-client**, but mutual (two way) TLS as additional functionality.
 
-- Spring Boot 2 -> 3.x
-- Other plugin with JAXB3 support: org.jvnet.jaxb/jaxb-maven-plugin
-- Java 8 -> 17
-- Test messages added
-- Location generated sources: /src -> /target
-- separate restcontroller class 
-
-The jaxb-maven-plugin will compile loaneligibility.wsdl into fully annotated java classes. 
-Note that this wsdl is not generated from a xsd schema (as was the case in project springboot3-soap-server), but stored as a source file in the resources folder.
+Certificates, csr files and stores have been created as described in https://paras301.medium.com/implementing-ssl-tls-in-springboot-mutual-tls-mtls-part-2-b3eb64c6a78e.
 
 # running the app
 
-1. make sure the server side app runs
+1. run the server side app **springboot3-soap-server-mtls**
 2. start the client app from the IDE or as follows:
 ```cmd
 ./mvnw spring-boot:run
