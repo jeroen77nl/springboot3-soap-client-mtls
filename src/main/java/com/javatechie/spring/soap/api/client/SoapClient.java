@@ -11,14 +11,13 @@ public class SoapClient {
 
   private static final String URL = "https://localhost:8443/ws";
 
-  private final Jaxb2Marshaller jaxb2Marshaller;
+  private final WebServiceTemplate webServiceTemplate;
 
-  public SoapClient(Jaxb2Marshaller jaxb2Marshaller) {
-    this.jaxb2Marshaller = jaxb2Marshaller;
+  public SoapClient(WebServiceTemplate webServiceTemplate) {
+    this.webServiceTemplate = webServiceTemplate;
   }
 
   public Acknowledgement getLoanStatus(CustomerRequest request) {
-    var webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
     Object response = webServiceTemplate.marshalSendAndReceive(URL, request);
     return (Acknowledgement) response;
   }

@@ -1,7 +1,8 @@
 package com.javatechie.spring.soap.api.config;
 
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
@@ -14,14 +15,10 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
 
-import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
 
 @Configuration
 public class SoapConfig {
@@ -67,8 +64,19 @@ public class SoapConfig {
 
     SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
 
+    // Configure request settings
+    RequestConfig requestConfig = RequestConfig.custom()
+            .setExpectContinueEnabled(false) // Disable 'Expect: 100-Continue' handshake
+            .build();
+
+    // Fixes a strange runtime exception 'Content-Length header already present'
+    HttpRequestInterceptor contentLengthInterceptor =
+            (request, context) -> request.removeHeaders("Content-Length");
+
     return HttpClients.custom()
             .setSSLSocketFactory(socketFactory)
+            .setDefaultRequestConfig(requestConfig)
+            .addInterceptorFirst(contentLengthInterceptor)
             .build();
   }
 
@@ -82,8 +90,8 @@ public class SoapConfig {
   }
 
   private KeyStore loadTrustStore(String path, String password) throws Exception {
-//    KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-    KeyStore trustStore = KeyStore.getInstance("JKS");
+    KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//    KeyStore trustStore = KeyStore.getInstance("JKS");
     Resource resource = new ClassPathResource(path);
     try (InputStream inputStream = resource.getInputStream()) {
       trustStore.load(inputStream, password.toCharArray());
