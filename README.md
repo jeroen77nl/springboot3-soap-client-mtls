@@ -3,7 +3,7 @@
 springboot3-soap-client-mtls runs on port 9090 and consumes the webservice of project **springboot3-soap-server-mtls**, that runs on port 8080.
 The app is a soap client as well as a rest server.
 
-This application is based on the project **springboot3-soap-client**, but mutual (two way) TLS as additional functionality.
+This application is based on the project **springboot3-soap-client**, but offers mutual (or two way) TLS as additional functionality.
 
 Certificates, csr files and stores have been created as described in https://paras301.medium.com/implementing-ssl-tls-in-springboot-mutual-tls-mtls-part-2-b3eb64c6a78e.
 
