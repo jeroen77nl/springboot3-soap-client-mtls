@@ -1,4 +1,4 @@
-# springboot3-soap-client
+# springboot3-soap-client-mtls
 
 springboot3-soap-client runs on port 9090 and consumes the webservice of project **springboot3-soap-server**, that runs on port 8080.
 The app is a soap client as well as a rest server.

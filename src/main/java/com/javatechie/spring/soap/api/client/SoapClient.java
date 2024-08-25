@@ -9,7 +9,7 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 @Service
 public class SoapClient {
 
-  private static final String URL = "http://localhost:8080/ws";
+  private static final String URL = "https://localhost:8443/ws";
 
   private final Jaxb2Marshaller jaxb2Marshaller;
 
