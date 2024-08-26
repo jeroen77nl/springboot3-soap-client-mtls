@@ -9,5 +9,4 @@ public class Springboot3SoapClientApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Springboot3SoapClientApplication.class, args);
 	}
-
 }
