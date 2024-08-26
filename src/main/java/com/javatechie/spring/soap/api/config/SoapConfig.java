@@ -28,16 +28,22 @@ public class SoapConfig {
   @Value("${client.ssl.keystore-password}")
   private String keyStorePassword;
 
+  @Value("${client.ssl.keystore-type}")
+  private String keyStoreType;
+
   @Value("${client.ssl.truststore}")
   private String trustStorePath;
 
   @Value("${client.ssl.truststore-password}")
   private String trustStorePassword;
 
+  @Value("${marshaller.packages.to.scan}")
+  private String marshallerPackagesToScan;
+
   @Bean
   public Jaxb2Marshaller marshaller() {
     Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-    marshaller.setPackagesToScan("com.javatechie.spring.soap.api.loaneligibility");
+    marshaller.setPackagesToScan(marshallerPackagesToScan);
     return marshaller;
   }
 
@@ -64,7 +70,6 @@ public class SoapConfig {
 
     SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
 
-    // Configure request settings
     RequestConfig requestConfig = RequestConfig.custom()
             .setExpectContinueEnabled(false) // Disable 'Expect: 100-Continue' handshake
             .build();
@@ -81,7 +86,7 @@ public class SoapConfig {
   }
 
   private KeyStore loadKeyStore(String path, String password) throws Exception {
-    KeyStore keyStore = KeyStore.getInstance("PKCS12");
+    KeyStore keyStore = KeyStore.getInstance(keyStoreType);
     Resource resource = new ClassPathResource(path);
     try (InputStream inputStream = resource.getInputStream()) {
       keyStore.load(inputStream, password.toCharArray());
@@ -91,7 +96,6 @@ public class SoapConfig {
 
   private KeyStore loadTrustStore(String path, String password) throws Exception {
     KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-//    KeyStore trustStore = KeyStore.getInstance("JKS");
     Resource resource = new ClassPathResource(path);
     try (InputStream inputStream = resource.getInputStream()) {
       trustStore.load(inputStream, password.toCharArray());

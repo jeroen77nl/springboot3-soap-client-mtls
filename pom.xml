@@ -87,7 +87,7 @@
                     <schemaIncludes>
                         <include>*.wsdl</include>
                     </schemaIncludes>
-                    <generateDirectory>${project.basedir}/target/generated/src/main/java</generateDirectory>
+                    <generateDirectory>${project.basedir}/target/generated-sources/main/java</generateDirectory>
                 </configuration>
             </plugin>
         </plugins>
